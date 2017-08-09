@@ -1,4 +1,5 @@
 import turtle
+
 turtle.tracer(1,0)
 
 turtle.setup(700, 700)
@@ -21,6 +22,7 @@ LEFT_ARROW = "Left"
 RIGHT_ARROW = "Right"
 LEFT = 2
 RIGHT = 3
+IDLE = 0
 
 direction = LEFT
 
@@ -31,14 +33,14 @@ def left ():
     if player.pos()[0] > -300:   #dan added
         direction=LEFT
     else:
-        direction = RIGHT
+        direction = IDLE
     move()
 def right ():
     global direction
     if player.pos()[0] < 300:  #dan added
         direction=RIGHT
     else:
-        direction = LEFT
+        direction = IDLE
     move()
 
 turtle.onkeypress(left, LEFT_ARROW)
@@ -57,7 +59,8 @@ def move():
     elif direction==LEFT:
         player.goto(x_pos - SQUARE_SIZE, y_pos)
         print("You moved left!")
-
+    elif direction == IDLE:
+        pass
     
 ##    #_______________musa start_____________________________
 ##    if my_pos[0] > -300 and my_pos[0] < 300:
@@ -80,6 +83,31 @@ def move():
 ##            player.goto(x_pos+25, y_pos)
 ###__________________________musa end_________________________________
 
-turtle.mainloop()
+
+phlaphel = turtle.clone()
+turtle.register_shape("Falafel.gif")
+phlaphel.shape('Falafel.gif')
+phlaphel.penup()
 
 
+def player_shot():
+    global ball_shot
+    shot = player.pos()
+    x_pos = shot[0]
+    y_pos = shot[1]
+    #phlaphel.goto(shot)
+    phlaphel.goto(x_pos, y_pos+100)
+    phlaphel.showturtle()
+
+    
+
+def shotBullet():
+    global ball_shot
+    phlaphel.goto(phlaphel.pos()[0], phlaphel.pos()[1] + 10)
+    turtle.ontimer(shotBullet, 10)
+
+shotBullet()
+
+turtle.onkeypress(player_shot, 'space')
+
+turtle.mainloop()    
