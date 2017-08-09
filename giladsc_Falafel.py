@@ -1,8 +1,10 @@
 import turtle
-import time
+#import time
+import random
 
 turtle.tracer(1,0)
 mouth=turtle.clone()
+mouth_shot=turtle.clone()
 turtle.hideturtle()
 turtle.setup(700,700)
 turtle.penup()
@@ -10,9 +12,9 @@ mouth.penup()
 
 clones_list=[]
 clones_pos_list=[]
-shot_pos=[]
+shot_stamp_pos=[]
 
-TIME_STEP=1000
+TIME_STEP=500
 
 turtle.register_shape("mouth.gif")
 mouth.shape("mouth.gif")
@@ -24,12 +26,12 @@ y_pos = -100
 def draw_enemy():
     global x_pos, y_pos
     for row in range(0,5):
-        x_pos=-300
+        x_pos=-280
         y_pos+=50
         mouth.setposition(x_pos,y_pos)
-        for column in range (0,10):
+        for column in range (0,14):
             if column != 0:
-                x_pos += 60
+                x_pos += 40
                 mouth.goto(x_pos, y_pos)
                 
             mouth_clone=mouth.clone()
@@ -64,7 +66,20 @@ def move_enemy_left():
 
 move_enemy_right()
 
-            
+############################
+mouth_shot.color("yellow")
+def enemy_shot():
+    mouth_shot_clones=mouth_shot.stamp()
+    shot_stamp_pos.append(mouth_shot_clones)
+    mouth_shot_clones=random.randint(0, len(clones_pos_list)-1
+                                     
+enemy_shot()
+##    random.randint(shot_pos)=random.randint(clones_pos_list)
+##    
+##enemy_shot()
+##
+##def enemy_shot_movement():
+##    mouth_shot.backward()                             
             
 
 
