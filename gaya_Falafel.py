@@ -86,28 +86,52 @@ def move():
 
 phlaphel = turtle.clone()
 turtle.register_shape("Falafel.gif")
+turtle.register_shape("ketchup.gif")
 phlaphel.shape('Falafel.gif')
 phlaphel.penup()
 
-
+ball_shot = False
 def player_shot():
     global ball_shot
-    shot = player.pos()
-    x_pos = shot[0]
-    y_pos = shot[1]
-    #phlaphel.goto(shot)
-    phlaphel.goto(x_pos, y_pos+100)
-    phlaphel.showturtle()
 
-    
+    if ball_shot == False:
+        shot = player.pos()
+        x_pos = shot[0]
+        y_pos = shot[1]
+        #phlaphel.goto(shot)
+        phlaphel.goto(x_pos, y_pos + 20)
+        phlaphel.showturtle()
+        phlaphel.shape("Falafel.gif")
+        ball_shot = True
+
+def ketchup():
+    global ball_shot
+
+    if ball_shot == False:
+        shot = player.pos()
+        x_pos = shot[0]
+        y_pos = shot[1]
+        #phlaphel.goto(shot)
+        phlaphel.goto(x_pos, y_pos + 20)
+        phlaphel.showturtle()
+        phlaphel.shape("ketchup.gif")
+        ball_shot = True
 
 def shotBullet():
     global ball_shot
-    phlaphel.goto(phlaphel.pos()[0], phlaphel.pos()[1] + 10)
+
+    if ball_shot == True:
+        phlaphel.goto(phlaphel.pos()[0], phlaphel.pos()[1] + 20)
+
+    if phlaphel.pos()[1] >= 300:
+        ball_shot = False
+    
     turtle.ontimer(shotBullet, 10)
 
 shotBullet()
 
-turtle.onkeypress(player_shot, 'space')
+turtle.onkeypress(player_shot, 'z')
+turtle.onkeypress(ketchup, 'x')
 
 turtle.mainloop()    
+ 
