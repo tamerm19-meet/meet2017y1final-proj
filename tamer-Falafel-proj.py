@@ -12,7 +12,7 @@ turtle.hideturtle()
 turtle.bgcolor("black")
 #Edges and Borders:
 
-UP_EDGE = 300
+UP_EDGE = 300s
 DOWN_EDGE = -300
 RIGHT_EDGE = 300
 LEFT_EDGE = -300
@@ -89,6 +89,22 @@ def accessories():
     acc.goto(300, 350)
 accessories()
 
+clockVar = 0
+
+def clock():
+    global clockVar
+    clockVar += 1
+
+    checkClock()
+    turtle.ontimer(clock, 1000)
+
+def checkClock():
+    global clockVar
+    if clockVar == 2:
+        quit()
+
+clock()
+
 h=0
 def highscore():
     high=turtle.clone()
@@ -100,24 +116,6 @@ def highscore():
 
 highscore()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+############################################################################
 
 
