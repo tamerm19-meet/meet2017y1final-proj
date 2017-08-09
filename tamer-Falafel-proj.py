@@ -1,3 +1,4 @@
+
 import turtle
 
 turtle.tracer(1, 0)
@@ -39,38 +40,65 @@ def create_border():
 create_border()
 
 #This is the starving kid:
-turtle.register_shape("starvingKids.gif")
-starving_kid1=turtle.clone()
-starving_kid1.shape("starvingKids.gif")
-starving_kid1.pu()
-starving_kid1.showturtle()
-starving_kid1.goto(0, 310)
-
+def starving_kid():
+    turtle.register_shape("starvingKids.gif")
+    starving_kid1=turtle.clone()
+    starving_kid1.shape("starvingKids.gif")
+    starving_kid1.pu()
+    starving_kid1.showturtle()
+    starving_kid1.goto(30, 310)
+starving_kid()
 #score:
+n = 0
 def score():
     score_turtle=turtle.clone()
     score_turtle.hideturtle
     score_turtle.pu()
-    score_turtle.goto(0, 0)
-    score_turtle.showturtle()
     score_turtle.color("white")
-    score_turtle.goto(-330, 305)
-    score_turtle.write("Score:", font=("Arial", 24, "normal"))
-    score_turtle.goto(-230, 305)
-    #n is the SCORE! this IS IMPORTANT!
-    score_turtle.write(n, font=("Aerial", 24, "normal"))
+    score_turtle.goto(-295, 305)
+    score_turtle.write("Score: " + str(n), font=("Arial", 24, "normal"))
 
     
 score()
 
 def accessories():
-    turtle_acc=turtle.clone()
-    turtle_acc.pu()
-    turtle_acc.goto(-350, -350)
+    acc = turtle.clone()
+    acc.showturtle()
+    acc.color("white")
+    acc.hideturtle()
+    acc.pu()
+    acc.goto(-350, -300)
+    acc.pd()
+    acc.pensize(10)
+    acc.goto(-300, -300)
+    acc.goto(-300, -350)
+    acc.pu()
+    acc.goto(350, -300)
+    acc.pd()
+    acc.goto(300, -300)
+    acc.goto(300, -350)
+    acc.pu()
+    acc.goto(-350, 300)
+    acc.pd()
+    acc.goto(-300, 300)
+    acc.goto(-300, 350)
+    acc.pu()
+    acc.goto(350, 300)
+    acc.pd()
+    acc.goto(300, 300)
+    acc.goto(300, 350)
+accessories()
 
+h=0
+def highscore():
+    high=turtle.clone()
+    high.color("white")
+    high.hideturtle()
+    high.pu()
+    high.goto(-290, -340)
+    high.write("Highscore: " + str(h), font=("Aerial", 24, "normal"))
 
-
-
+highscore()
 
 
 
