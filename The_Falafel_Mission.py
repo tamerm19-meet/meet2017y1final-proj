@@ -39,8 +39,7 @@ xclick=0
 yclick = 0
 
 mainMenu()
-
-
+    
 ##############################
 
 turtle.tracer(1, 0)
@@ -61,8 +60,8 @@ turtle.register_shape("mouth.gif")
 mouth.shape("mouth.gif")
 turtle.bgcolor("black")
 
-x_pos = -300
-y_pos = -100
+x_pos = -280
+y_pos = -130
 
 #Edges and Borders:
 
@@ -167,8 +166,9 @@ def timer():
     clock_clone.write("0:" + str(clock), font=("Aerial", 16, "normal"))
     
     if clock == 2:
-        ##gameOver()
-        print("gameOver")
+##        gameOver()
+        print("Game Over")
+        
     turtle.ontimer(timer, 1000)
     
 def draw_enemy():
@@ -176,16 +176,16 @@ def draw_enemy():
 
     mouth.showturtle()
     
-    for row in range(0,5):
-        x_pos=-280
-        y_pos+=50
+    for row in range(0,4):
+        x_pos = -280
+        y_pos += 60
         mouth.setposition(x_pos,y_pos)
-        for column in range (0,14):
+        for column in range (0,13):
             if column != 0:
                 x_pos += 40
                 mouth.goto(x_pos, y_pos)
                 
-            mouth_clone=mouth.clone()
+            mouth_clone = mouth.clone()
             clones_list.append(mouth_clone)
             clones_pos_list.append(mouth_clone.pos())
             
@@ -198,8 +198,10 @@ def move_enemy_right():
     global count
     for clone in clones_list:
         (x_pos,y_pos) = clone.pos()
+        d = clones_pos_list.index(clone.pos())
         clone.goto(x_pos+10,y_pos)
-
+        clones_pos_list[d] = clone.pos()
+        
     count += 1
     if count % 5 == 0:
         move_enemy_left()
@@ -210,20 +212,47 @@ def move_enemy_left():
     global count
     for clone in clones_list:
         (x_pos,y_pos) = clone.pos()
+        d = clones_pos_list.index(clone.pos())
         clone.goto(x_pos-10,y_pos)
-
+        clones_pos_list[d] = clone.pos()
+        
     count+=1
     if count % 5 == 0:
         move_enemy_right()
     else:
         turtle.ontimer(move_enemy_left, TIME_STEP)
-
+        
+        
 #####################################################33
+
+
+##    #_______________musa start_____________________________
+##    if my_pos[0] > -300 and my_pos[0] < 300:
+##     #___________________musa end_____________________________
+##        if direction==RIGHT:
+##            player.goto(x_pos +SQUARE_SIZE, y_pos)
+##            print ("You moved right!")
+##        elif direction==LEFT:
+##            player.goto(x_pos - SQUARE_SIZE, y_pos)
+##            print("You moved left!")
+##
+## #_________________________musa start____________________________           
+##    elif my_pos[0] <= -300 or my_pos[0] >= 300:
+##        player.goto(x_pos, y_pos)
+##        if direction == RIGHT:
+##            player.goto(x_pos-25, y_pos)
+##        
+##        elif direction == LEFT:
+## if x_pos + SQUARE_SIZE < 300 and x_pos - SQUARE_SIZE > -300:
+##            player.goto(x_pos+25, y_pos)
+###__________________________musa end_________________________________
+
+
 
 pos_list = []
 stamp_list = []
 
-SQUARE_SIZE = 20
+SQUARE_SIZE = 10
 
 
 player = turtle.clone()
@@ -245,14 +274,14 @@ direction = LEFT
 
 def left ():
     global direction
-    if player.pos()[0] > -280:   #dan added
+    if player.pos()[0] > -280:   
         direction=LEFT
     else:
         direction = IDLE
     move()
 def right ():
     global direction
-    if player.pos()[0] < 280:  #dan added
+    if player.pos()[0] < 280:  
         direction=RIGHT
     else:
         direction = IDLE
@@ -269,7 +298,7 @@ def move():
     x_pos = my_pos[0]
     y_pos = my_pos[1]
     if direction==RIGHT:
-        player.goto(x_pos +SQUARE_SIZE, y_pos)
+        player.goto(x_pos + SQUARE_SIZE, y_pos)
         print ("You moved right!")
     elif direction==LEFT:
         player.goto(x_pos - SQUARE_SIZE, y_pos)
@@ -289,6 +318,12 @@ ball_shot = False
 IS_KETCHUP = False
 def falafel_shot():
     global ball_shot, IS_KETCHUP
+
+    """
+    If ball_shot is False,
+    it shoots a piece of falafel
+    and sets ball_shot to True
+    """
     
     if ball_shot == False:
         phlaphel.st()
@@ -296,7 +331,7 @@ def falafel_shot():
         x_pos = shot[0]
         y_pos = shot[1]
         #phlaphel.goto(shot)
-        phlaphel.goto(x_pos, y_pos + 10)
+        phlaphel.goto(x_pos, y_pos)
         phlaphel.showturtle()
         phlaphel.shape("phlaphel2.gif")
         ball_shot = True
@@ -304,6 +339,12 @@ def falafel_shot():
 
 def ketchup_shot():
     global ball_shot, IS_KETCHUP
+
+    """
+    If ball_shot is False,
+    it shoots a piece of ketchup
+    and sets ball_shot to True
+    """
     
     if ball_shot == False:
         phlaphel.st()
@@ -311,12 +352,23 @@ def ketchup_shot():
         x_pos = shot[0]
         y_pos = shot[1]
         #phlaphel.goto(shot)
-        phlaphel.goto(x_pos, y_pos + 10)
+        phlaphel.goto(x_pos, y_pos)
         phlaphel.showturtle()
         phlaphel.shape("ketchup.gif")
         ball_shot = True
         IS_KETCHUP = True
 
+def kill_enemies():
+    global clones_list, clones_pos_list
+    
+    for i in range(len(clones_pos_list) - 1):
+        if (phlaphel.pos() == clones_pos_list[i]) == True:
+            clones_list[i].ht()
+            clones_list.pop(i)
+            clones_pos_list.pop(i)
+            print("asfasf")
+            break
+            
 def shotBullet():
     global ball_shot, SCORE
 
@@ -326,25 +378,50 @@ def shotBullet():
     if phlaphel.pos()[1] >= UP_EDGE:
         phlaphel.ht()
         phlaphel.goto(0, -1000)
-        SCORE += 1
+
+        if IS_KETCHUP == True:
+            SCORE -= 1
+        else:
+            SCORE += 1
+            
         ball_shot = False
         score()
 
     if (phlaphel.pos() in clones_pos_list) == True:
         phlaphel.ht()
-        phlaphel.goto(0, -1000)
         
         if IS_KETCHUP:
-            pass
-            ## Kill the enemy
+            kill_enemies()
         else:
             SCORE -= 1
-            score()
-            
+
+        phlaphel.goto(0, -10000)
+        score()
         ball_shot = False
         print("hit enemy")
     
     turtle.ontimer(shotBullet, 5)
+
+def controlBullet():
+    """
+    If ball_shot is True, moves the
+    phlaphel up by 30
+    If the phlaphel's y is bigger than
+    
+    or equal to 300, ball_shot becomes False
+    Every 10 milliseconds, run shotBullet()
+    """
+    global ball_shot
+    
+    if ball_shot == True:
+        # move up by 30
+        phlaphel.goto(phlaphel.pos()[0], phlaphel.pos()[1] + 30)
+
+    # if the phlaphel goes above the border
+    if phlaphel.pos()[1] >= 300:
+        ball_shot = False
+    
+    turtle.ontimer(controlBullet, 10)
 
 shotBullet()
 
@@ -363,6 +440,26 @@ def variables(rawx,rawy):
     yclick = int(rawy//1)
 
 turtle.onscreenclick(variables)
+
+
+def gameOver():
+    edgy_turtle.clear()
+    screenMinX = -screen.window_width()/2
+    screenMinY = -screen.window_height()/2
+    screenMaxX = screen.window_width()/2
+    screenMaxY = screen.window_height()/2
+    screen.bgcolor("black")
+    goto(0, screenMaxY - 350)
+    color('grey')
+    write("GAME OVER!!", align="center", font=("Arial",50))
+
+    color('black')
+    
+    turtle.stamp()
+    turtle.register_shape("ppp.gif")
+    turtle.shape("ppp.gif")
+    turtle.goto(200,-200)
+    turtle.stamp()
 
 def check_click():
     IS_NOT_MENU = False
@@ -384,13 +481,10 @@ def check_click():
         
 check_click()
 
-## TODO: ADD KETCHUP BULLET - Y
 ##       ADD ENEMY SHOT - N
 ##       MOVING KIDS - N / 2
-##       SCORE SYSTEM - - Y / 2
-##       TIME SYSTEM - N / 2
 ##       FIX BUGS - N / 2
-##       KILL ENEMY - N
+##       KILL ENEMY - Y / 2
 ##       GAME OVER - Y
 ##       BUG - Run the game while in main menu because hit the bullet in the kids
-##       Bug - Wrong calculations about the bullet pos and enemy pos
+
